@@ -24,7 +24,8 @@ void label2RGB(int  **labeled_image, unsigned char ***rgb_image,int num_segment,
 void clean(unsigned char ***input,unsigned char **gray,unsigned char **binary, int **labeled_image,int height , int width);
 void BFS(unsigned char **binary_image,int **label, Location location, int *current_label, int height,int width);
 
-// main function, you do not need to make any changes to this function
+
+
 int main(int argc,char **argv) {
 
     srand( time(0) );
@@ -142,8 +143,7 @@ int main(int argc,char **argv) {
     return 0;
 }
 
-//This function is used to test your queue implementation. You do not need to change it,
-//though doing so might be useful/helpful
+
 
 void test_queue() {
     // create some locations;
@@ -204,7 +204,6 @@ void gray2binary(unsigned char **in,unsigned char **out,int height,int width) {
 }
 
 //This is the function that does the work of looping over the binary image and doing the connected component labeling
-//See the .pdf for more details
 int component_labeling(unsigned char **binary_image,int **label,int height,int width) {
     int current_label = 1;
     for (int i=0; i<(height); i++) {
@@ -212,7 +211,7 @@ int component_labeling(unsigned char **binary_image,int **label,int height,int w
             Location location;
             location.row = i;
             location.col = j;
-            if ((binary_image[i][j] != 0)&&(label[i][j] == 0)){//check what label is initialized to.
+            if ((binary_image[i][j] != 0)&&(label[i][j] == 0)){
                 label[i][j] = current_label;
                 BFS(binary_image,label,location,&current_label,height,width);
                 current_label++;
@@ -258,10 +257,8 @@ void BFS(unsigned char **binary_image,int **label, Location location, int *curre
             label[temp.row][temp.col - 1] = *current_label;
         }
     }
-
 }
 
-//     (temp.row + 1)==0 || (temp.row - 1)==0 || (temp.col + 1)==0 || (temp.col - 1)==0
 
 
 //First make num_segments random colors to use for coloring the labeled parts of the image.
@@ -291,12 +288,13 @@ void label2RGB(int  **labeled_image, unsigned char ***rgb_image,int num_segments
     delete [] colors;
 }
 #endif
-//fill out this function to delete all of the dynamic arrays created
+
+//deletes all of the dynamic arrays created
 void clean(unsigned char ***input,unsigned char **gray,unsigned char **binary, int **labeled_image,int height , int width) {
     if(input ) {
         for (int i=0; i<(height); i++) {
             for (int j = 0; j < (width); j++) {
-                delete [] input [i][j];//delete allocated input image array here
+                delete [] input [i][j];
             }
             delete [] input[i];
         }
@@ -306,14 +304,14 @@ void clean(unsigned char ***input,unsigned char **gray,unsigned char **binary, i
     if(gray) {
         for (int i=0; i<(height); i++) {
             delete [] gray [i];
-        }//delete gray-scale image here
+        }
         delete [] gray;
     }
     if(binary) {
         for (int i=0; i<(height); i++) {
             delete [] binary [i];
 
-        }//delete binary image array here
+        }
         delete [] binary;
     }
     if(labeled_image) {
@@ -321,7 +319,7 @@ void clean(unsigned char ***input,unsigned char **gray,unsigned char **binary, i
             delete [] labeled_image[i];
         }
         delete [] labeled_image;
-        //delete labeled array here
+        
     }
 
 
